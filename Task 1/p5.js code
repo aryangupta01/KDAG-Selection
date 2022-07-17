@@ -1,0 +1,39 @@
+const density = "Ñ@#W$9876543210?!abc;:+=-,._ ";
+
+let image1;
+
+function preload() {
+  image1 = loadImage("Facebook_cover.png");
+}
+function setup() {
+
+  createCanvas(760,400);
+}
+function draw() {
+  background(0);
+  // image(image1,0,0,width,height)
+  image1.loadPixels();
+  
+  let w = width / image1.width;
+  let h = height / image1.height;
+  
+  for (let i = 0; i < image1.width; i++) {
+    for (let j = 0; j < image1.height; j++) {
+      const pixelIndex = (i + j * image1.width) * 4;
+      const r = image1.pixels[pixelIndex + 0];
+      const g = image1.pixels[pixelIndex + 1];
+      const b = image1.pixels[pixelIndex + 2];
+      const avg = (r + g + b) / 3;
+      
+      const len = density.length
+      const charIndex = floor(map(avg,0,255,len,0));
+      
+      noStroke();
+      fill(255)
+      // square(i * w,j * h,w)
+      textSize(w)
+      textAlign(CENTER,CENTER)
+      text(density.charAt(charIndex),i*w+w*0.5,j*h+h*0.5)
+    
+    }
+  }}
